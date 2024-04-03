@@ -1,12 +1,13 @@
 type User @entity {
     id: ID!
+    address: Bytes!
     timestamp: BigInt!
     transaction: Bytes!
 }
 
 type UserActivity @entity {
     id: ID!
-    user: String!
+    user: Bytes!
     accountSource: Bytes
     timestamp: BigInt!
     updateTimestamp: BigInt
@@ -14,8 +15,9 @@ type UserActivity @entity {
 
 type Account @entity {
     id: ID!
-    user: String!
+    user: Bytes!
     timestamp: BigInt!
+    blockNumber: BigInt!
     name: String
     quotesCount: BigInt!
     positionsCount: BigInt!
@@ -32,7 +34,7 @@ type Account @entity {
 type BalanceChange @entity {
     id: ID!
     type: String!
-    account: String!
+    account: Bytes!
     amount: BigInt!
     collateral: Bytes!
     timestamp: BigInt!
@@ -42,7 +44,7 @@ type BalanceChange @entity {
 
 type TradeHistory @entity {
     id: ID!
-    account: String!
+    account: Bytes!
     volume: BigInt!
     timestamp: BigInt!
     updateTimestamp: BigInt!
@@ -54,13 +56,16 @@ type TradeHistory @entity {
 
 type Quote @entity {
     id: ID!
-    account: String!
+    account: Bytes!
     partyBsWhiteList: [Bytes!]
     symbolId: BigInt!
+    symbolName: String!
     positionType: Int!
     orderType: Int!
+    openOrderType: Int!
     price: BigInt!
     marketPrice: BigInt!
+    openedPrice: BigInt
     openPrice: BigInt
     deadline: BigInt!
     quantity: BigInt!
@@ -68,7 +73,6 @@ type Quote @entity {
     partyAmm: BigInt!
     partyBmm: BigInt!
     lf: BigInt!
-    maxFundingRate: BigInt!
     quoteStatus: Int!
     blockNumber: BigInt!
     closedAmount: BigInt!
@@ -76,6 +80,8 @@ type Quote @entity {
     partyB: Bytes
     collateral: Bytes!
     liquidatedSide: Int
+    fundingPaid: BigInt!
+    fundingReceived: BigInt!
     timestamp: BigInt!
     updateTimestamp: BigInt!
     transaction: Bytes!
@@ -96,6 +102,8 @@ type DailyHistory @entity {
     newAccounts: BigInt!
     platformFee: BigInt!
     openInterest: BigInt!
+    fundingPaid: BigInt!
+    fundingReceived: BigInt!
     accountSource: Bytes
     updateTimestamp: BigInt!
     timestamp: BigInt!
@@ -114,6 +122,8 @@ type TotalHistory @entity {
     users: BigInt!
     accounts: BigInt!
     platformFee: BigInt!
+    fundingPaid: BigInt!
+    fundingReceived: BigInt!
     accountSource: Bytes
     updateTimestamp: BigInt!
     timestamp: BigInt!
@@ -124,6 +134,7 @@ type Symbol @entity {
     name: String!
     tradingFee: BigInt!
     timestamp: BigInt!
+    blockNumber: BigInt!
     updateTimestamp: BigInt!
 }
 

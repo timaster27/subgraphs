@@ -1,4 +1,4 @@
-import {BigInt, Bytes} from "@graphprotocol/graph-ts"
+import {Address, BigInt, Bytes} from "@graphprotocol/graph-ts"
 import {
 	Account as AccountModel,
 	Account,
@@ -8,7 +8,7 @@ import {
 	SymbolTradeVolume,
 	TotalHistory,
 	User as UserModel,
-	User, UserActivity
+	UserActivity,
 } from "../generated/schema"
 
 import {ethereum} from "@graphprotocol/graph-ts/chain/ethereum"
@@ -45,6 +45,8 @@ export function getDailyHistoryForTimestamp(timestamp: BigInt, accountSource: By
 		dh.newAccounts = BigInt.zero()
 		dh.platformFee = BigInt.zero()
 		dh.openInterest = BigInt.zero()
+		dh.fundingPaid = BigInt.zero()
+		dh.fundingReceived = BigInt.zero()
 		dh.accountSource = accountSource
 		dh.save()
 	}
@@ -69,6 +71,8 @@ export function getTotalHistory(timestamp: BigInt, accountSource: Bytes | null):
 		th.users = BigInt.zero()
 		th.accounts = BigInt.zero()
 		th.platformFee = BigInt.zero()
+		th.fundingReceived = BigInt.zero()
+		th.fundingPaid = BigInt.zero()
 		th.accountSource = accountSource
 		th.save()
 	}
@@ -133,26 +137,26 @@ export function updateDailyOpenInterest(
 	blockTimestamp: BigInt,
 	value: BigInt,
 	increase: boolean,
-	accountSource: Bytes | null
+	accountSource: Bytes | null,
 ): void {
 	let oi = getOpenInterest(blockTimestamp, accountSource)
 	let dh = getDailyHistoryForTimestamp(blockTimestamp, accountSource)
 
 	const startOfDay = BigInt.fromString(
-		(getDateFromTimeStamp(blockTimestamp).getTime() / 1000).toString()
+		(getDateFromTimeStamp(blockTimestamp).getTime() / 1000).toString(),
 	)
 
 	if (isSameDay(blockTimestamp, oi.timestamp)) {
 		oi.accumulatedAmount = oi.accumulatedAmount.plus(
-			diffInSeconds(blockTimestamp, oi.timestamp).times(oi.amount)
+			diffInSeconds(blockTimestamp, oi.timestamp).times(oi.amount),
 		)
 		dh.openInterest = oi.accumulatedAmount.div(
-			diffInSeconds(blockTimestamp, startOfDay)
+			diffInSeconds(blockTimestamp, startOfDay),
 		)
 	} else {
 		dh.openInterest = oi.accumulatedAmount.div(BigInt.fromString("86400"))
 		oi.accumulatedAmount = diffInSeconds(blockTimestamp, startOfDay).times(
-			oi.amount
+			oi.amount,
 		)
 	}
 	oi.amount = increase ? oi.amount.plus(value) : oi.amount.minus(value)
@@ -166,12 +170,12 @@ export function updateDailyOpenInterest(
 
 export function updateActivityTimestamps(
 	account: Account,
-	timestamp: BigInt
+	timestamp: BigInt,
 ): void {
 	account.lastActivityTimestamp = timestamp
 	account.save()
 	let ua = getUserActivity(account.user, account.accountSource, timestamp)
-	let uaTimestamp = ua.updateTimestamp === null ? BigInt.fromString("0") : ua.updateTimestamp!
+	let uaTimestamp = ua.updateTimestamp === null ? BigInt.zero() : ua.updateTimestamp!
 	if (!isSameDay(timestamp, uaTimestamp)) {
 		let dh = getDailyHistoryForTimestamp(timestamp, account.accountSource)
 		dh.activeUsers = dh.activeUsers.plus(BigInt.fromString("1"))
@@ -181,8 +185,8 @@ export function updateActivityTimestamps(
 	ua.save()
 }
 
-export function getUserActivity(user: string, accountSource: Bytes | null, timestamp: BigInt): UserActivity {
-	const id = user + "_" + (accountSource === null ? "null" : accountSource.toHexString())
+export function getUserActivity(user: Bytes, accountSource: Bytes | null, timestamp: BigInt): UserActivity {
+	const id = user.toHexString() + "_" + (accountSource === null ? "null" : accountSource.toHexString())
 	let ua = UserActivity.load(id)
 	if (ua == null) {
 		ua = new UserActivity(id)
@@ -194,10 +198,11 @@ export function getUserActivity(user: string, accountSource: Bytes | null, times
 	return ua
 }
 
-export function createNewUser(address: string, accountSource: Bytes | null, block: ethereum.Block, transaction: ethereum.Transaction): UserModel {
-	let user = new UserModel(address)
+export function createNewUser(address: Bytes, accountSource: Bytes | null, block: ethereum.Block, transaction: ethereum.Transaction): UserModel {
+	let user = new UserModel(address.toHexString())
 	user.timestamp = block.timestamp
 	user.transaction = transaction.hash
+	user.address = address
 	user.save()
 	const dh = getDailyHistoryForTimestamp(block.timestamp, accountSource)
 	dh.newUsers = dh.newUsers.plus(BigInt.fromString("1"))
@@ -209,10 +214,11 @@ export function createNewUser(address: string, accountSource: Bytes | null, bloc
 }
 
 
-export function createNewAccount(address: string, user: UserModel, accountSource: Bytes | null, block: ethereum.Block, transaction: ethereum.Transaction, name: string | null = null): AccountModel {
-	let account = new AccountModel(address)
+export function createNewAccount(address: Bytes, user: UserModel, accountSource: Bytes | null, block: ethereum.Block, transaction: ethereum.Transaction, name: string | null = null): AccountModel {
+	let account = new AccountModel(address.toHexString())
 	account.lastActivityTimestamp = block.timestamp
 	account.timestamp = block.timestamp
+	account.blockNumber = block.number
 	account.transaction = transaction.hash
 	account.deposit = BigInt.zero()
 	account.withdraw = BigInt.zero()
@@ -220,7 +226,7 @@ export function createNewAccount(address: string, user: UserModel, accountSource
 	account.deallocated = BigInt.zero()
 	account.quotesCount = BigInt.zero()
 	account.positionsCount = BigInt.zero()
-	account.user = user.id
+	account.user = user.address
 	account.updateTimestamp = block.timestamp
 	account.accountSource = accountSource
 	account.name = name
