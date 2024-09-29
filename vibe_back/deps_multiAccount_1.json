@@ -1,0 +1,10 @@
+{
+  "Account": [
+    "AddAccountEvent",
+    "EditAccountName"
+  ],
+  "User": [
+    "AddAccountEvent",
+    "EditAccountName"
+  ]
+}

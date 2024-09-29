@@ -1,0 +1,32 @@
+{
+	"network": "base",
+	"contracts": [
+		{
+			"address": "0x91Cf2D8Ed503EC52768999aA6D8DBeA6e52dbe43",
+			"abi": "symmio",
+			"version": "0_8_2",
+			"startBlock": "8443806"
+		},
+		{
+			"address": "0xD48d1249C551D36701043E223e35Ae34FC9d941C",
+			"abi": "referralNFT",
+			"version": "1",
+			"startBlock": "19551969"
+		},
+		{
+			"address": "0x4db6289880eB3BeD280958726396F43E996D8D58",
+			"abi": "rakeback",
+			"version": "1",
+			"startBlock": "19579863"
+		},
+		{
+			"address": "0x8a98f69139534Ef85775b473082CE4Af1373cd63",
+			"abi": "multiAccount",
+			"version": "1",
+			"startBlock": "19460596"
+		}
+	],
+	"deploy_urls": {
+		"vibe_back": "vibe_test_1"
+	}
+}

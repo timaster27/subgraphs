@@ -1,0 +1,50 @@
+type DailyUserHistory @entity {
+	id: ID! # user + referrerNft + day
+	day: BigInt!
+	user: Bytes!
+	account: Bytes!
+	activeNftId: BigInt
+	referrerNftId: BigInt
+	referrerAccount: Bytes
+	tradeVolume: BigInt!
+	platformFeePaid: BigInt!
+	rakeback: BigInt!
+	userRakebackShare: BigInt!
+	timestamp: BigInt!
+	lastUpdate: BigInt!
+}
+
+type Quote @entity {
+	id: ID!
+	account: Bytes!
+	symbolId: BigInt!
+	quantity: BigInt!
+	positionType: Int!
+	closedAmount: BigInt!
+	openedPrice: BigInt
+	quoteStatus: Int!
+	avgClosedPrice: BigInt!
+	transaction: Bytes!
+	timestamp: BigInt!
+	lastUpdate: BigInt!
+	openDay: BigInt
+	closeDay: BigInt
+}
+
+type NFT @entity {
+	id: String!
+	owner: Bytes!
+	accountOwner: Bytes!
+	referrerId: BigInt
+	lastUpdate: BigInt!
+	blockNumber: BigInt!
+	blockTimestamp: BigInt!
+}
+
+type VolumeRakebackTier @entity {
+	id: String!
+	maxVolume: BigInt
+	rakebackRatio: BigInt
+	addedTimestamp: BigInt
+	removedTimestamp: BigInt
+}

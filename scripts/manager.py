@@ -54,6 +54,9 @@ abi_versions = {
     "symmioMultiAccount": ["1"],
     "off_chain_vault": ["1"],
     "on_chain_vault": ["1"],
+    "multiAccount": ["1"],
+    "rakeback": ["1"],
+    "referralNFT": ["1"],
 }
 
 
@@ -375,7 +378,7 @@ def prepare_module(config: Config, target_module: str):
                     {"event": event.signature, "handler": event.handler_name}
                     for event in contract_events
                 ],
-                "file": f"./{target_module}/src_{contract.path() if not contract.fake else "fake"}.ts",
+                "file": f"./{target_module}/src_{contract.path() if not contract.fake else 'fake'}.ts",
             },
         }
         if contract.endBlock:
