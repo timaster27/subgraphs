@@ -6,7 +6,7 @@ import {QuoteStatus} from "../../config"
 import {Version} from "../../../common/BaseHandler";
 import {FillCloseRequest} from "../../../generated/symmio_0_8_2/symmio_0_8_2";
 
-export class CloseRequestHandler extends Handler {
+export class CloseRequestHandler<T> extends Handler<T> {
     event: FillCloseRequest
     user: Address
     account: Address

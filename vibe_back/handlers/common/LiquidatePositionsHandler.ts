@@ -6,7 +6,7 @@ import {QuoteStatus} from "../../config"
 import {Version} from "../../../common/BaseHandler";
 import {LiquidatePositionsPartyA, symmio_0_8_2} from "../../../generated/symmio_0_8_2/symmio_0_8_2";
 
-export class LiquidatePositionsHandler extends Handler {
+export class LiquidatePositionsHandler<T> extends Handler<T> {
     event: LiquidatePositionsPartyA
     user: Address
     account: Address

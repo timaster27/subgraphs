@@ -2,7 +2,7 @@ import {Address, BigInt, ethereum} from "@graphprotocol/graph-ts"
 import {Account} from "../../../generated/schema"
 import {Version} from "../../../common/BaseHandler";
 
-export class Handler {
+export class Handler<T> {
     private _event: ethereum.Event
     timestamp: BigInt
     day: BigInt

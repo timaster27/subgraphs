@@ -1,14 +1,14 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts"
 import { DailyUserHistory } from "../generated/schema"
-import { ReferralNFT } from "../generated/SymmDataSource/referralNFT"
-import { Rakeback } from "../generated/SymmDataSource/rakeback"
+import { referralNFT_1 } from "../generated/referralNFT_1/referralNFT_1"
+import { rakeback_1 } from "../generated/rakeback_1/rakeback_1"
 import { RAKEBACK_ADDRESS, REFERRAL_NFT_ADDRESS } from "./config"
 
 export const zero_address = Address.fromHexString("0x0000000000000000000000000000000000000000")
 
 function getReferrerNftId(activeNftId: BigInt): BigInt {
 	// returns 0 if the user has no referrer or the referrer is not a valid NFT
-	const referralNft = ReferralNFT.bind(Address.fromString(REFERRAL_NFT_ADDRESS))
+	const referralNft = referralNFT_1.bind(Address.fromString(REFERRAL_NFT_ADDRESS))
 	const referrerNftIdRes = referralNft.try_referrer(activeNftId)
 	if (referrerNftIdRes.reverted) {
 		return BigInt.zero()
@@ -24,28 +24,28 @@ function getReferrerNftId(activeNftId: BigInt): BigInt {
 }
 
 function getActiveNftId(account: Address): BigInt {
-	const referralNft = ReferralNFT.bind(Address.fromString(REFERRAL_NFT_ADDRESS))
+	const referralNft = referralNFT_1.bind(Address.fromString(REFERRAL_NFT_ADDRESS))
 	let res = referralNft.try_tokenInUse(account)
 	if (res.reverted) return BigInt.zero()
 	return res.value
 }
 
 function getNftOwner(nftId: BigInt): Address {
-	const referralNft = ReferralNFT.bind(Address.fromString(REFERRAL_NFT_ADDRESS))
+	const referralNft = referralNFT_1.bind(Address.fromString(REFERRAL_NFT_ADDRESS))
 	let res = referralNft.try_tokenAccountOwner(nftId)
 	if (res.reverted) return Address.zero()
 	return res.value
 }
 
 function getRakeback(tradeVolume: BigInt, feePaid: BigInt): BigInt {
-	const rakeback = Rakeback.bind(Address.fromString(RAKEBACK_ADDRESS))
+	const rakeback = rakeback_1.bind(Address.fromString(RAKEBACK_ADDRESS))
 	let res = rakeback.try_getRakeback(tradeVolume, feePaid)
 	if (res.reverted) return BigInt.fromI32(0)
 	return res.value
 }
 
 function getReferralRakebackRatio(): BigInt {
-	const rakeback = Rakeback.bind(Address.fromString(RAKEBACK_ADDRESS))
+	const rakeback = rakeback_1.bind(Address.fromString(RAKEBACK_ADDRESS))
 	let res = rakeback.try_referralRakebackRatio()
 	if (res.reverted) return BigInt.fromI32(0)
 	return res.value
@@ -105,7 +105,7 @@ export function updateDailyHistory(user: Address, account: Address, day: BigInt,
 }
 
 export function getAccountOwner(tokenId: BigInt): Address {
-	const referralNft = ReferralNFT.bind(Address.fromString(REFERRAL_NFT_ADDRESS))
+	const referralNft = referralNFT_1.bind(Address.fromString(REFERRAL_NFT_ADDRESS))
 	let res = referralNft.try_tokenAccountOwner(tokenId)
 	if (res.reverted) return Address.zero()
 	return res.value

@@ -6,7 +6,7 @@ import {updateDailyHistory, zero_address} from "../../utils";
 import {Quote, Symbol} from "../../../generated/schema";
 import {QuoteStatus} from "../../config";
 
-export class OpenPositionHandler extends Handler {
+export class OpenPositionHandler<T> extends Handler<T> {
     event: OpenPosition
     user: Address
     account: Address

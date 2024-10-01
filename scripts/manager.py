@@ -235,8 +235,10 @@ def get_needed_events_for(
 
     events = []
     for model in models:
+        if model in target_dependencies:
+            events.extend(target_dependencies.get(model))
+            continue
         events.extend(common_dependencies.get(model, []))
-        events.extend(target_dependencies.get(model, []))
     return list(set(events))
 
 

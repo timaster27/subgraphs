@@ -22,54 +22,54 @@ import {SetSymbolTradingFeeHandler} from "./handlers/symmio/SetSymbolTradingFeeH
 
 
 export function handleAddSymbol(event: AddSymbol): void {
-    let handler = new AddSymbolHandler(event)
+    let handler = new AddSymbolHandler<AddSymbol>()
     handler.handle(event, Version.v_0_8_2)
 }
 
 
 export function handleEmergencyClosePosition(event: EmergencyClosePosition): void {
-    let handler = new EmergencyClosePositionHandler(event)
+    let handler = new EmergencyClosePositionHandler<EmergencyClosePosition>(event)
     handler.handle(event, Version.v_0_8_2)
 }
 
 
 export function handleFillCloseRequest(event: FillCloseRequest): void {
-    let handler = new FillCloseRequestHandler(event)
+    let handler = new FillCloseRequestHandler<FillCloseRequest>(event)
     handler.handle(event, Version.v_0_8_2)
 }
 
 
 export function handleForceClosePosition(event: ForceClosePosition): void {
-    let handler = new ForceClosePositionHandler(event)
+    let handler = new ForceClosePositionHandler<ForceClosePosition>(event)
     handler.handle(event, Version.v_0_8_2)
 }
 
 
 export function handleLiquidatePositionsPartyA(event: LiquidatePositionsPartyA): void {
-    let handler = new LiquidatePositionsPartyAHandler(event)
+    let handler = new LiquidatePositionsPartyAHandler<LiquidatePositionsPartyA>(event)
     handler.handle(event, Version.v_0_8_2)
 }
 
 
 export function handleLiquidatePositionsPartyB(event: LiquidatePositionsPartyB): void {
-    let handler = new LiquidatePositionsPartyBHandler(event)
+    let handler = new LiquidatePositionsPartyBHandler<LiquidatePositionsPartyB>(event)
     handler.handle(event, Version.v_0_8_2)
 }
 
 
 export function handleOpenPosition(event: OpenPosition): void {
-    let handler = new OpenPositionHandler(event)
+    let handler = new OpenPositionHandler<OpenPosition>(event)
     handler.handle(event, Version.v_0_8_2)
 }
 
 
 export function handleSendQuote(event: SendQuote): void {
-    let handler = new SendQuoteHandler(event)
+    let handler = new SendQuoteHandler<SendQuote>()
     handler.handle(event, Version.v_0_8_2)
 }
 
 
 export function handleSetSymbolTradingFee(event: SetSymbolTradingFee): void {
-    let handler = new SetSymbolTradingFeeHandler(event)
+    let handler = new SetSymbolTradingFeeHandler<SetSymbolTradingFee>()
     handler.handle(event, Version.v_0_8_2)
 }

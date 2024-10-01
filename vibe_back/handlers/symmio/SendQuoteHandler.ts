@@ -5,12 +5,12 @@ import {Account, Quote} from "../../../generated/schema";
 import { BigInt } from "@graphprotocol/graph-ts"
 import {SendQuote} from "../../../generated/symmio_0_8_2/symmio_0_8_2";
 
-export class SendQuoteHandler {
-    constructor(event: SendQuote) {}
+export class SendQuoteHandler<T> {
+    constructor() {}
 
     handle(_event: ethereum.Event, version: Version): void {
         // @ts-ignore
-        const event = changetype(_event)
+        const event = changetype<SendQuote>(_event)
         let account = Account.load(event.params.partyA.toHexString())
         if (!account) return
 

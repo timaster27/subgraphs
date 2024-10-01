@@ -1,0 +1,23 @@
+{
+  "Quote": [
+    "SendQuote",
+    "LiquidatePositionsPartyB",
+    "LiquidatePositionsPartyA",
+    "ForceClosePosition",
+    "EmergencyClosePosition",
+    "FillCloseRequest",
+    "OpenPosition"
+  ],
+  "User": [
+    "SendQuote",
+    "AddAccount"
+  ],
+  "Symbol": [
+    "AddSymbol",
+    "SetSymbolTradingFee"
+  ],
+  "Account": [
+    "SendQuote",
+    "OpenPosition"
+  ]
+}
