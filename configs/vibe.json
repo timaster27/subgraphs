@@ -6,7 +6,7 @@
 			"abi": "symmio",
 			"version": "0_8_2",
 			"startBlock": "8443806",
-			"dependencies": ["referralNFT_1"]
+			"dependencies": ["referralNFT_1", "rakeback_1"]
 		},
 		{
 			"address": "0xD48d1249C551D36701043E223e35Ae34FC9d941C",
