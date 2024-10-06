@@ -8,16 +8,12 @@
     "FillCloseRequest",
     "OpenPosition"
   ],
-  "User": [
-    "SendQuote",
-    "AddAccount"
-  ],
-  "Symbol": [
-    "AddSymbol",
-    "SetSymbolTradingFee"
-  ],
-  "Account": [
-    "SendQuote",
+  "DailyUserHistory": [
+    "EmergencyClosePosition",
+    "FillCloseRequest",
+    "ForceClosePosition",
+    "LiquidatePositionsPartyA",
+    "LiquidatePositionsPartyB",
     "OpenPosition"
   ]
 }

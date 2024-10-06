@@ -7,6 +7,6 @@ import {
 export class SetSymbolTradingFeeHandler<T> extends CommonSetSymbolTradingFeeHandler<T> {
 
     handle(_event: ethereum.Event, version: Version): void {
-        super.handle(_event, version)
+        super.handleSymbol(_event, version)
     }
 }

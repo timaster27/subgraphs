@@ -5,7 +5,8 @@
 			"address": "0x91Cf2D8Ed503EC52768999aA6D8DBeA6e52dbe43",
 			"abi": "symmio",
 			"version": "0_8_2",
-			"startBlock": "8443806"
+			"startBlock": "8443806",
+			"dependencies": ["referralNFT_1"]
 		},
 		{
 			"address": "0xD48d1249C551D36701043E223e35Ae34FC9d941C",

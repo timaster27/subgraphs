@@ -4,7 +4,7 @@ import {AddSymbolHandler as CommonAddSymbolHandler} from "../../../common/handle
 
 export class AddSymbolHandler<T> extends CommonAddSymbolHandler<T> {
     handle(_event: ethereum.Event, version: Version): void {
-        super.handle(_event, version)
+        super.handleSymbol(_event, version)
     }
 }
 

@@ -1,8 +1,10 @@
 import {ethereum} from "@graphprotocol/graph-ts"
-import {LiquidatePositionsHandler as CommonLiquidatePositionsHandler} from "../common/LiquidatePositionsHandler";
 import {Version} from "../../../common/BaseHandler";
+import {
+    AllocatePartyAHandler as CommonAllocatePartyAHandler
+} from "../../../common/handlers/symmio/AllocatePartyAHandler";
 
-export class LiquidatePositionsPartyBHandler<T> extends CommonLiquidatePositionsHandler<T> {
+export class AllocatePartyAHandler<T> extends CommonAllocatePartyAHandler<T> {
     handle(_event: ethereum.Event, version: Version): void {
         super.handle(_event, version)
     }

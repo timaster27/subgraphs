@@ -6,6 +6,6 @@ import {
 
 export class EditAccountNameHandler<T> extends CommonEditAccountNameHandler<T> {
     handle(_event: ethereum.Event, version: MultiAccountVersion): void {
-        super.handle(_event, version)
+        super.handleAccount(_event, version)
     }
 }
